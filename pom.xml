@@ -76,8 +76,9 @@
         <module>jwks-rsa-ikmdev</module>
         <module>openjfx-monocle-17</module>
         <module>openjfx-monocle-21</module>
+        <module>openjfx-monocle-26</module>
         <module>testfx-core</module>
-        <module>testfx-junit5</module>
+        <!--<module>testfx-junit5</module>-->
     </modules>
 
     <build>
