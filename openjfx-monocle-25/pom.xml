@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>one.jpro.platform.jpms</groupId>
+		<artifactId>jpms-parent</artifactId>
+		<version>1.0.0</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+
+	<artifactId>${core.artifact.artifactId}</artifactId>
+	<packaging>jar</packaging>
+	<version>${core.artifact.version}-${core.artifact.release}</version>
+
+	<name>JPro Platform OpenJFX Monocle JPMS Module</name>
+	<description>
+		A modularized version of OpenJFX Monocle, repackaged for use with the JPro platform.
+		This module enables headless testing and provides comprehensive GUI testing support for JavaFX applications,
+		ensuring full compliance with the Java Platform Module System (JPMS).
+	</description>
+
+	<properties>
+		<!-- change release here-->
+		<core.artifact.groupId>org.testfx</core.artifact.groupId>
+		<core.artifact.artifactId>openjfx-monocle</core.artifact.artifactId>
+		<core.artifact.version>25.0.3</core.artifact.version>
+
+		<!-- transitive dependency versions -->
+		<org.openjfx.version>25.0.3</org.openjfx.version>
+	</properties>
+
+  <!-- NOTE: openjfx-monocle was built locally with Monocle repository, so add it manually to local maven repository -->
+  <!-- maven repository layout, see https://maven.apache.org/repository/layout.html -->
+  <!-- "C:\Program Files\JetBrains\IntelliJ IDEA 2023.3.2\plugins\maven\lib\maven3\bin\mvn.cmd" install:install-file -Dfile=${project.basedir}/../Monocle/build/libs/openjfx-monocle-25.0.3.jar -DgroupId=org.testfx -DartifactId=openjfx-monocle -Dversion=25.0.3 -Dpackaging=jar -->
+  <!-- "C:\Program Files\JetBrains\IntelliJ IDEA 2023.3.2\plugins\maven\lib\maven3\bin\mvn.cmd" install:install-file -Dfile=${project.basedir}/../Monocle/build/libs/openjfx-monocle-25.0.3-javadoc.jar -DgroupId=org.testfx -DartifactId=openjfx-monocle -Dversion=25.0.3 -Dpackaging=jar -Dclassifier=javadoc -->
+  <!-- "C:\Program Files\JetBrains\IntelliJ IDEA 2023.3.2\plugins\maven\lib\maven3\bin\mvn.cmd" install:install-file -Dfile=${project.basedir}/../Monocle/build/libs/openjfx-monocle-25.0.3-sources.jar -DgroupId=org.testfx -DartifactId=openjfx-monocle -Dversion=25.0.3 -Dpackaging=jar -Dclassifier=sources -->
+  <!-- "C:\Program Files\JetBrains\IntelliJ IDEA 2023.3.2\plugins\maven\lib\maven3\bin\mvn.cmd" install:install-file -Dfile=${project.basedir}/../Monocle/build/libs/openjfx-monocle-25.0.3.pom -DgroupId=org.testfx -DartifactId=openjfx-monocle -Dversion=25.0.3 -Dpackaging=pom -->
+
+	<!-- transitive dependencies of the repackaged artifact -->
+	<dependencies>
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-base</artifactId>
+			<version>${org.openjfx.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-graphics</artifactId>
+			<version>${org.openjfx.version}</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<resources>
+			<resource>
+				<directory>${basedir}/</directory>
+				<includes>
+					<include>LICENSE.txt</include>
+				</includes>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>sources</id>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<phase>prepare-package</phase>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>${core.artifact.groupId}</groupId>
+									<artifactId>${core.artifact.artifactId}</artifactId>
+									<version>${core.artifact.version}</version>
+									<classifier>sources</classifier>
+								</artifactItem>
+								<artifactItem>
+									<groupId>${core.artifact.groupId}</groupId>
+									<artifactId>${core.artifact.artifactId}</artifactId>
+									<version>${core.artifact.version}</version>
+									<classifier>javadoc</classifier>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-artifacts</id>
+						<phase>package</phase>
+						<goals>
+							<goal>attach-artifact</goal>
+						</goals>
+						<configuration>
+							<artifacts>
+								<artifact>
+									<file>${project.build.directory}/dependency/${project.artifactId}-${core.artifact.version}-sources.jar</file>
+									<type>jar</type>
+									<classifier>sources</classifier>
+								</artifact>
+								<artifact>
+									<file>${project.build.directory}/dependency/${project.artifactId}-${core.artifact.version}-javadoc.jar</file>
+									<type>jar</type>
+									<classifier>javadoc</classifier>
+								</artifact>
+							</artifacts>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.moditect</groupId>
+				<artifactId>moditect-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>add-module-infos</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>add-module-info</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/moditect</outputDirectory>
+							<overwriteExistingFiles>true</overwriteExistingFiles>
+							<modules>
+								<module>
+									<artifact>
+										<groupId>${core.artifact.groupId}</groupId>
+										<artifactId>${core.artifact.artifactId}</artifactId>
+										<version>${core.artifact.version}</version>
+									</artifact>
+									<moduleInfo>
+										<name>org.testfx.monocle</name>
+										<open>true</open>
+										<requires>javafx.base</requires>
+										<requires>javafx.graphics</requires>
+										<exports>*;</exports>
+									</moduleInfo>
+								</module>
+							</modules>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>rename-sources</id>
+						<phase>package</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<echo message="renaming sources file" />
+								<copy file="${project.build.directory}/dependency/${project.artifactId}-${core.artifact.version}-sources.jar"
+									  tofile="${project.build.directory}/${project.artifactId}-${core.artifact.version}-${core.artifact.release}-sources.jar" />
+							</target>
+						</configuration>
+					</execution>
+					<execution>
+						<id>rename-javadoc</id>
+						<phase>package</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<echo message="renaming javadoc file" />
+								<copy file="${project.build.directory}/dependency/${project.artifactId}-${core.artifact.version}-javadoc.jar"
+									  tofile="${project.build.directory}/${project.artifactId}-${core.artifact.version}-${core.artifact.release}-javadoc.jar" />
+							</target>
+						</configuration>
+					</execution>
+					<execution>
+						<phase>prepare-package</phase>
+						<configuration>
+							<target>
+								<echo message="unzipping files" />
+								<unzip
+									src="${project.build.directory}/moditect/${project.artifactId}-${core.artifact.version}.jar"
+									dest="${project.build.directory}/classes/">
+								</unzip>
+							</target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
