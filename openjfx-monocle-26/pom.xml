@@ -26,18 +26,18 @@
 		<!-- change release here-->
 		<core.artifact.groupId>org.testfx</core.artifact.groupId>
 		<core.artifact.artifactId>openjfx-monocle</core.artifact.artifactId>
-		<core.artifact.version>26.0.1</core.artifact.version>
+		<core.artifact.version>26.0.2</core.artifact.version>
 
 		<!-- transitive dependency versions -->
-		<org.openjfx.version>26.0.1</org.openjfx.version>
+		<org.openjfx.version>26.0.2</org.openjfx.version>
 	</properties>
 
   <!-- NOTE: openjfx-monocle was built locally with Monocle repository, so add it manually to local maven repository -->
   <!-- maven repository layout, see https://maven.apache.org/repository/layout.html -->
-  <!-- "C:\Program Files\JetBrains\IntelliJ IDEA 2023.3.2\plugins\maven\lib\maven3\bin\mvn.cmd" install:install-file -Dfile=${project.basedir}/../Monocle/build/libs/openjfx-monocle-26.0.1.jar -DgroupId=org.testfx -DartifactId=openjfx-monocle -Dversion=26.0.1 -Dpackaging=jar -->
-  <!-- "C:\Program Files\JetBrains\IntelliJ IDEA 2023.3.2\plugins\maven\lib\maven3\bin\mvn.cmd" install:install-file -Dfile=${project.basedir}/../Monocle/build/libs/openjfx-monocle-26.0.1-javadoc.jar -DgroupId=org.testfx -DartifactId=openjfx-monocle -Dversion=26.0.1 -Dpackaging=jar -Dclassifier=javadoc -->
-  <!-- "C:\Program Files\JetBrains\IntelliJ IDEA 2023.3.2\plugins\maven\lib\maven3\bin\mvn.cmd" install:install-file -Dfile=${project.basedir}/../Monocle/build/libs/openjfx-monocle-26.0.1-sources.jar -DgroupId=org.testfx -DartifactId=openjfx-monocle -Dversion=26.0.1 -Dpackaging=jar -Dclassifier=sources -->
-  <!-- "C:\Program Files\JetBrains\IntelliJ IDEA 2023.3.2\plugins\maven\lib\maven3\bin\mvn.cmd" install:install-file -Dfile=${project.basedir}/../Monocle/build/libs/openjfx-monocle-26.0.1.pom -DgroupId=org.testfx -DartifactId=openjfx-monocle -Dversion=26.0.1 -Dpackaging=pom -->
+  <!-- "C:\Program Files\JetBrains\IntelliJ IDEA 2023.3.2\plugins\maven-plugin\lib\maven3\bin\mvn.cmd" install:install-file -Dfile=${project.basedir}/../Monocle/build/libs/openjfx-monocle-26.0.2.jar -DgroupId=org.testfx -DartifactId=openjfx-monocle -Dversion=26.0.2 -Dpackaging=jar -->
+  <!-- "C:\Program Files\JetBrains\IntelliJ IDEA 2023.3.2\plugins\maven-plugin\lib\maven3\bin\mvn.cmd" install:install-file -Dfile=${project.basedir}/../Monocle/build/libs/openjfx-monocle-26.0.2-javadoc.jar -DgroupId=org.testfx -DartifactId=openjfx-monocle -Dversion=26.0.2 -Dpackaging=jar -Dclassifier=javadoc -->
+  <!-- "C:\Program Files\JetBrains\IntelliJ IDEA 2023.3.2\plugins\maven-plugin\lib\maven3\bin\mvn.cmd" install:install-file -Dfile=${project.basedir}/../Monocle/build/libs/openjfx-monocle-26.0.2-sources.jar -DgroupId=org.testfx -DartifactId=openjfx-monocle -Dversion=26.0.2 -Dpackaging=jar -Dclassifier=sources -->
+  <!-- "C:\Program Files\JetBrains\IntelliJ IDEA 2023.3.2\plugins\maven-plugin\lib\maven3\bin\mvn.cmd" install:install-file -Dfile=${project.basedir}/../Monocle/build/libs/openjfx-monocle-26.0.2.pom -DgroupId=org.testfx -DartifactId=openjfx-monocle -Dversion=26.0.2 -Dpackaging=pom -->
 
 	<!-- transitive dependencies of the repackaged artifact -->
 	<dependencies>
